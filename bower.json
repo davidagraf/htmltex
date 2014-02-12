@@ -1,0 +1,10 @@
+{
+  "name": "posdemo",
+  "version": "0.0.0",
+  "dependencies": {
+    "sass-bootstrap": "~3.0.2",
+    "modernizr": "~2.7.1",
+    "jquery": "~2.0.3"
+  },
+  "devDependencies": {}
+}
