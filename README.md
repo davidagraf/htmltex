@@ -1,4 +1,4 @@
-dashboard
+HTMLTex
 =========
 
-Dashboard Demo
+Prototype to replace Word with HTML & CSS.
