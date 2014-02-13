@@ -19,7 +19,7 @@
 
 @for $i from 1 through 4 {
   h#{$i} {
-    counter-reset: headernum-h#{$i};
+    counter-reset: headernum-h#{$i+1};
   }
   $nums: ();
   @for $j from 1 through $i {
