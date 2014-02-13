@@ -38,33 +38,6 @@ gulp.task('sass', function() {
     .pipe(gulp.dest('.tmp2/styles'));
 });
 
-gulp.task('deploy', function() {
-  gulp.src('app/styles/**/*.scss')
-    .pipe(sass())
-    .pipe(gulp.dest('dist/styles'));
-  gulp.src('app/bower_components/modernizr/modernizer.js')
-    .pipe(gulp.dest('dist/bower_components/modernizr'));
-  gulp.src('app/bower_components/jquery/jquery.js')
-    .pipe(gulp.dest('dist/bower_components/jquery'));
-  gulp.src('app/bower_components/mathjs/dist/math.js')
-    .pipe(gulp.dest('dist/bower_components/mathjs/dist'));
-  gulp.src('app/bower_components/hammerjs/hammer.js')
-    .pipe(gulp.dest('dist/bower_components/hammerjs'));
-  gulp.src('app/bower_components/jquery-hammerjs/jquery.hammer.js')
-    .pipe(gulp.dest('dist/bower_components/jquery-hammerjs'));
-  gulp.src('app/scripts/**/*')
-    .pipe(gulp.dest('dist/scripts'));
-  gulp.src([
-      'app/.htaccess',
-      'app/404.html',
-      'app/favicon.ico',
-      'app/index.html',
-      'app/robots.txt'
-    ]
-  )
-    .pipe(gulp.dest('dist'));
-});
-
 gulp.task('default', function(){
   var servers = createServers(8888, 35729);
 
