@@ -20,7 +20,7 @@
   }
   ;
 
-  $(':header').each(function(key, value) {
+  $(':header:not(.clean)').each(function(key, value) {
     var depth = +value.nodeName.substring(1),
         newtext = genNumbers(depth) + ' ' + $(value).text();
     $(value).text(newtext); 
