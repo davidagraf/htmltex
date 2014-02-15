@@ -28,6 +28,7 @@
 
 @media print {
   @page {
+    margin: 20mm 20mm;
   }
   .page-break { 
     page-break-before: always;
