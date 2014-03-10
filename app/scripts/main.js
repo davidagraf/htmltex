@@ -3,6 +3,7 @@
 (function() {
   var $toc = $('#toc'),
       depths = [],
+      headerCounter = 0,
 
   genNumbers = function(depth) {
     var i;
@@ -24,6 +25,7 @@
     var depth = +value.nodeName.substring(1),
         newtext = genNumbers(depth) + ' ' + $(value).text();
     $(value).text(newtext); 
-    $toc.append('<p>' + newtext + '</p>');
+    $(value).attr('id', 'header' + headerCounter);
+    $toc.append('<a class="tocentry" href="#header' + headerCounter++ + '">' + newtext + '</a><br/>');
   });
 })();

@@ -29,12 +29,17 @@
 @media print {
   @page {
     margin: 20mm 20mm;
+    size: A4;
+    @top-center {
+      content: "Sample";
+    }
   }
-  .page-break { 
+
+  .page-break {
     page-break-before: always;
   }
+
   h1,h2,h3,h4,h5,h6 {
     page-break-after: avoid;
   }
 }
-
