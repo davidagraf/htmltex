@@ -33,7 +33,7 @@
 
   pageHeight = Infinity;
   DIV_ARTICLE.children().each(function(key, value) {
-    var $value = $(value), elHeight = $value.outerHeight();
+    var $value = $(value), elHeight = $value.outerHeight(true);
 
     if ($value.hasClass('page-break') || pageHeight + elHeight > A4_HEIGHT) {
       pageHeight = 0;
