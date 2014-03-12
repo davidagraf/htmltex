@@ -4,7 +4,7 @@
   var $toc = $('#toc'),
       depths = [],
       headerCounter = 0,
-      A4_HEIGHT = 842, pageHeight, pageDiv,
+      A4_HEIGHT = 842, pageDiv,
       DIV_ARTICLE = $('article'),
 
   genNumbers = function(depth) {
@@ -31,18 +31,20 @@
     $toc.append('<a href="#header' + headerCounter++ + '">' + newtext + '</a><br/>');
   });
 
-  pageHeight = Infinity;
   DIV_ARTICLE.children().each(function(key, value) {
     var $value = $(value), elHeight = $value.outerHeight(true);
 
-    if ($value.hasClass('page-break') || pageHeight + elHeight > A4_HEIGHT) {
-      pageHeight = 0;
+    if ($value.hasClass('page-break') || !pageDiv) {
       pageDiv = $('<div class="page"></div>');
       DIV_ARTICLE.append(pageDiv);
     }
-    pageHeight += elHeight;
-    console.log(pageHeight);
     pageDiv.append($value);
+    if (pageDiv.prop('offsetHeight') - pageDiv.prop('scrollHeight') < 0) {
+      $value.remove();
+      pageDiv = $('<div class="page"></div>');
+      DIV_ARTICLE.append(pageDiv);
+      pageDiv.append($value);
+    }
   });
 
 })();
