@@ -1,10 +1,12 @@
+/* global Text */
+
 'use strict';
 
 (function() {
   var $toc = $('#toc'),
       depths = [],
       headerCounter = 0,
-      A4_HEIGHT = 842, pageDiv,
+      pageDiv,
       DIV_ARTICLE = $('article'),
 
   genNumbers = function(depth) {
@@ -30,13 +32,19 @@
     curP.append(part);
     if (pageFull()) {
       curP.contents().last().remove();
-      pageDiv = $('<div class="page"></div>');
-      DIV_ARTICLE.append(pageDiv);
-      curP = $('<p/>'); 
+      insertNewPage();
+      curP = $('<p/>');
       pageDiv.append(curP);
       curP.append(part);
     }
     return curP;
+  },
+
+  insertNewPage = function() {
+    var outerPageDiv = $('<div class="outer-page"></div>');
+    pageDiv = $('<div class="page"></div>');
+    outerPageDiv.append(pageDiv);
+    DIV_ARTICLE.append(outerPageDiv);
   }
   ;
 
@@ -49,12 +57,11 @@
   });
 
   DIV_ARTICLE.children().each(function(key, value) {
-    var $value = $(value), elHeight = $value.outerHeight(true),
-        curP;
+    var $value = $(value), curP, newPageInserted = false;
 
-    if ($value.hasClass('page-break') || !pageDiv) {
-      pageDiv = $('<div class="page"></div>');
-      DIV_ARTICLE.append(pageDiv);
+    if (!pageDiv || $value.hasClass('page-break')) {
+      insertNewPage();
+      newPageInserted = true;
     }
     pageDiv.append($value);
     if (pageFull()) {
@@ -69,12 +76,11 @@
               curP = appendParaPart(curP, ' ' + w);
             });
           } else {
-            curP = appendParaPart(curP);
+            curP = appendParaPart(curP, v);
           }
         });
-      } else {
-        pageDiv = $('<div class="page"></div>');
-        DIV_ARTICLE.append(pageDiv);
+      } else if (!newPageInserted) {
+        insertNewPage();
         pageDiv.append($value);
       }
     }
