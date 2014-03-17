@@ -3,7 +3,7 @@
 'use strict';
 
 (function() {
-  var $toc = $('#toc'),
+  var $toc = $('.toc'),
       depths = [],
       headerCounter = 0,
       pageDiv,
@@ -28,12 +28,16 @@
     return pageDiv.prop('offsetHeight') - pageDiv.prop('scrollHeight') < 0;
   },
 
-  appendParaPart = function(curP, part) {
+  appendParaPart = function(curP, part, newEl) {
     curP.append(part);
     if (pageFull()) {
       curP.contents().last().remove();
       insertNewPage();
-      curP = $('<p/>');
+      if (newEl) {
+        curP = $(newEl);
+      } else {
+        curP = $('<p/>');
+      }
       pageDiv.append(curP);
       curP.append(part);
     }
@@ -90,6 +94,13 @@
           } else {
             curP = appendParaPart(curP, v);
           }
+        });
+      } else if ($value.hasClass('toc')) {
+        curP = $('<div class="toc"></div>');
+        pageDiv.append(curP);
+
+        $value.children().each(function(i, v){
+          curP = appendParaPart(curP, v, '<div class="toc"></div>');
         });
       } else if (!newPageInserted) {
         insertNewPage();
