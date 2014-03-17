@@ -45,6 +45,18 @@
     pageDiv = $('<div class="page"></div>');
     outerPageDiv.append(pageDiv);
     DIV_ARTICLE.append(outerPageDiv);
+  },
+
+  setHeaderFooter = function() {
+    var $outerPages = $('.outer-page'), totalPages = $outerPages.length;
+    $outerPages.each(function(page, v) {
+      $(v).append('<div class="header">header</div>')
+          .append('<div class="footer">' + (page+1) + '/' + totalPages + '</div>');
+
+      $(':header:not(.clean)', v).each(function(key, value) {
+        $('[data-header="' + $(value).attr('id') + '"]').append('<span class="tocpage">' + (page+1) + '</span>');
+      });
+    });
   }
   ;
 
@@ -53,7 +65,7 @@
         newtext = genNumbers(depth) + ' ' + $(value).text();
     $(value).text(newtext);
     $(value).attr('id', 'header' + headerCounter);
-    $toc.append('<a href="#header' + headerCounter++ + '">' + newtext + '</a><br/>');
+    $toc.append('<a data-header="header' + headerCounter + '" href="#header' + headerCounter++ + '">' + newtext + '</a><br/>');
   });
 
   DIV_ARTICLE.children().each(function(key, value) {
@@ -84,6 +96,10 @@
         pageDiv.append($value);
       }
     }
+
   });
+
+  setHeaderFooter();
+
 
 })();
