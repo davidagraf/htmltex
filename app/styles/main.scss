@@ -61,3 +61,20 @@ body {
 
 }
 
+@media print {
+  @page {
+    size: A4;
+    margin: 0;
+  }
+
+  .outer-page {
+    margin: 0;
+    border: 0;
+    box-shadow: none;
+    page-break-after: always;
+  }
+
+  .outer-page:last-child {
+    page-break-after: initial;
+  }
+}
