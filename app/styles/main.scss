@@ -36,6 +36,7 @@ body {
 
   .footer {
     bottom: 5mm;
+    float: right;
   }
 
   .page {
@@ -46,6 +47,13 @@ body {
       margin-top: 0px;
     }
 
+    .img-right {
+      float: right;
+    }
+
+    .img-left {
+      float: left;
+    }
 
   }
 
