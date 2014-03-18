@@ -8,6 +8,8 @@
       headerCounter = 0,
       pageDiv,
       DIV_ARTICLE = $('article'),
+      STR_P = '<p/>',
+      STR_TOC = '<div class="toc"></div>',
 
   genNumbers = function(depth) {
     var i;
@@ -28,20 +30,16 @@
     return pageDiv.prop('offsetHeight') - pageDiv.prop('scrollHeight') < 0;
   },
 
-  appendParaPart = function(curP, part, newEl) {
-    curP.append(part);
+  appendPart = function(curParent, part, newElStr) {
+    curParent.append(part);
     if (pageFull()) {
-      curP.contents().last().remove();
+      curParent.contents().last().remove();
       insertNewPage();
-      if (newEl) {
-        curP = $(newEl);
-      } else {
-        curP = $('<p/>');
-      }
-      pageDiv.append(curP);
-      curP.append(part);
+      curParent = $(newElStr);
+      pageDiv.append(curParent);
+      curParent.append(part);
     }
-    return curP;
+    return curParent;
   },
 
   insertNewPage = function() {
@@ -83,24 +81,24 @@
     if (pageFull()) {
       $value.remove();
       if (value.tagName.toLowerCase() === 'p') {
-        curP = $('<p/>');
+        curP = $(STR_P);
         pageDiv.append(curP);
 
         $value.contents().each(function(i, v){
           if (v instanceof Text) {
             $.each($(v).text().trim().split(' '), function(j,w) {
-              curP = appendParaPart(curP, ' ' + w);
+              curP = appendPart(curP, ' ' + w, STR_P);
             });
           } else {
-            curP = appendParaPart(curP, v);
+            curP = appendPart(curP, v, STR_P);
           }
         });
       } else if ($value.hasClass('toc')) {
-        curP = $('<div class="toc"></div>');
+        curP = $(STR_TOC);
         pageDiv.append(curP);
 
         $value.children().each(function(i, v){
-          curP = appendParaPart(curP, v, '<div class="toc"></div>');
+          curP = appendPart(curP, v, STR_TOC);
         });
       } else if (!newPageInserted) {
         insertNewPage();
